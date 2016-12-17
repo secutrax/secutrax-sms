@@ -83,7 +83,7 @@ app.post('/login', passport.authenticate('local', {
 app.use(logger('dev'));
 
 app.all('/*', ensureLoggedIn.ensureLoggedIn('/login'));
-app.use(favicon(__dirname + '/public/images/favicon.ico'));
+//app.use(favicon(__dirname + '/public/images/favicon.ico'));
 app.use('/', express.static('public'));
 
 var options = {
