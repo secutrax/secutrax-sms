@@ -13,6 +13,9 @@ const bodyParser = require('body-parser');
 var serveIndex = require('serve-index');
 var pg = require("pg");
 
+//To include external js files
+var nodeHelper = require("./node-helpers/user");
+
 var app = express();   
 
 var isWin = /^win/.test(process.platform);
@@ -72,6 +75,7 @@ app.use(passport.session());
 
 
 app.get('/login', function(request, response){
+		console.log("in");
       response.sendFile(__dirname+'/login.html');
   });
 
@@ -98,7 +102,14 @@ server.listen(portNumber, function () {
 require('./user').init(app);
 
 app.get('/logout', function (req, res){
+console.log("out in");
   req.session.destroy(function (err) {
+  console.log("out middle + " + err);
     res.redirect('/login');
+	// res.sendFile(__dirname+'/login.html');
   });
+  console.log("out out");
 });
+
+app.post('/saveUser', jsonParser, nodeHelper.saveUser);
+app.post('/saveFormat', jsonParser, nodeHelper.saveFormat);

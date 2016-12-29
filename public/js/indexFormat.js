@@ -7,21 +7,20 @@ angular.module('ApplFormAPP', [])
 });
 })
 
-.controller('ApplFormController', function($scope, $filter, $http, $location, $window) {
+.controller('ApplFormController', function($scope, $http, $location, $window) {
+
 
 $scope.formSubmit = function() {
 
 	$http({
         method: "POST",
-        url: '/saveUser',
+        url: '/saveFormat',
         contentType: "application/json; charset=utf-8",
         dataType: 'json',
         data: JSON.stringify({content:angular.toJson($scope.formDetails)}) })
 		.success(function(data, status, headers, config){
-			$window.location.href = "/view.html";
+				$window.location.href = "/viewFormat.html";
 		});
-
-	 
 }
 $scope.textBoxValidations = function(field) {
 	
@@ -75,27 +74,28 @@ $scope.numericTextBoxValidations = function(field) {
 }
 
 $scope.dateTextBoxValidations = function(field) {
-	field.value = $filter('date')(field.value, 'MM-dd-yyyy');
+	alert(field.value);
+	return;
 	if(field.required && (typeof field.value=="undefined" || field.value=="")) {
 		alert(field.displayName + " is required.");
 		return;
 	}
 	
 	if(field.value != "") {
-		// for(i=0; i<field.validations.length; i++) {
-			// var validation = field.validations[i];
-			// if(validation.name == "minValue") {
-				// if(field.value < validation.value) {
-					// alert(field.displayName + " : Should be greater : " + validation.value);
-					// return;
-				// }
-			// } else if(validation.name == "maxValue") {
-				// if(field.value > validation.value) {
-					// alert(field.displayName + " : Should be lesser : " + validation.value);
-					// return;
-				// }
-			// }
-		// }
+		for(i=0; i<field.validations.length; i++) {
+			var validation = field.validations[i];
+			if(validation.name == "minValue") {
+				if(field.value < validation.value) {
+					alert(field.displayName + " : Should be greater : " + validation.value);
+					return;
+				}
+			} else if(validation.name == "maxValue") {
+				if(field.value > validation.value) {
+					alert(field.displayName + " : Should be lesser : " + validation.value);
+					return;
+				}
+			}
+		}
 	}
 }
 	
@@ -115,7 +115,6 @@ $scope.handleInit = function() {
 };
 
 $scope.handleInit();
-
 
 })
 .directive('numbersOnly', function () {
