@@ -1,0 +1,22 @@
+{
+"institute": {
+	"name": "NSN",
+	"type":"SCHOOL",
+	"board":"CBSE,Matric",
+	"header":{
+		"header_1": "",
+		"header_2": "",
+		"header_3": "",
+		"header_4": ""
+		},
+	"logo":"fileName.png",
+	"library":{
+		"no_of_books": "",
+		"return_days": "",
+		"fine": "yes",
+		"per_day_fine": "no"
+		},
+	"no_working_days_per_week": 5,
+	"no_hours_per_day": 9,
+	}
+}
