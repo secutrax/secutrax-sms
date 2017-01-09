@@ -13,6 +13,9 @@ $scope.typeList = ["textfield", "numbertextfield", "date", "textarea", "selectbo
 $scope.groupObject = {"name":"group-","display":true,"fields":[]};
 $scope.fieldObject = {"display":true,"type":"textfield","required":false,"maxlength":"50","displayName":"Field-","validations":[],"options":[],"value":""};
 
+$scope.redirectToPage = function(name) {
+	$window.location.href = name;
+}
 $scope.formSubmit = function() {
 
 	$http({

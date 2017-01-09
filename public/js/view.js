@@ -7,8 +7,11 @@ angular.module('ApplFormAPP', [])
 });
 })
 
-.controller('ApplFormController', function($scope, $http, $location) {
+.controller('ApplFormController', function($scope, $http, $location, $window) {
 
+$scope.redirectToPage = function(name) {
+	$window.location.href = name;
+}
 
 $scope.textBoxValidations = function(field) {
 	

@@ -9,6 +9,10 @@ angular.module('ApplFormAPP', [])
 
 .controller('ApplFormController', function($scope, $filter, $http, $location, $window) {
 
+$scope.redirectToPage = function(name) {
+	$window.location.href = name;
+}
+
 $scope.formSubmit = function() {
 
 	$http({
