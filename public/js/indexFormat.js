@@ -9,6 +9,9 @@ angular.module('ApplFormAPP', [])
 
 .controller('ApplFormController', function($scope, $http, $location, $window) {
 
+$scope.typeList = ["textfield", "numbertextfield", "date", "textarea", "selectbox", "radio", "checkbox", ];
+$scope.groupObject = {"name":"group-","display":true,"fields":[]};
+$scope.fieldObject = {"display":true,"type":"textfield","required":false,"maxlength":"50","displayName":"Field-","validations":[],"options":[],"value":""};
 
 $scope.formSubmit = function() {
 
@@ -22,6 +25,14 @@ $scope.formSubmit = function() {
 				$window.location.href = "/viewFormat.html";
 		});
 }
+$scope.cloneField = function(fields, field, index) {
+	var field1 = {};
+	alert(field1);
+	angular.copy(field, field1);
+	alert(field1);
+	fields.splice(index, 0, field1)
+}
+
 $scope.textBoxValidations = function(field) {
 	
 	if(field.required && (typeof field.value=="undefined" || field.value=="")) {

@@ -15,7 +15,7 @@
 <link href="style_regform.css" rel="stylesheet" type="text/css" />
 </head>
 
-<body ng-app="ApplFormAPP" ng-controller="ApplFormController">
+<body ng-app="ApplFormAPP" ng-controller="ApplFormController" ng-init="showGroup=false">
 <form action="/logout" method="get" id="logoutForm">
  <div id="user-popover-content" style="position:absolute; left: 90%">        
   <!-- <a class="btn btn-primary" id="logout-button" ng-click="logout();" href="/login" > Logout </a> -->
@@ -68,25 +68,95 @@
 						
 						
 						
-						<tr ng-repeat-start="(indexGroup,group) in formDetails.groups">
+						<tr ng-repeat-start="group in formDetails.groups track by $index">
 						<td colspan="4" class="text_left_Bold">{{group.name}}
 						  <input type="hidden" name="grpid" value="39">
 						  <input type="hidden" name="instid" value="137">
+						  <span style="cursor:hand;" ng-click="formDetails.groups.push(groupObject)">+ </span>
+						  <span style="cursor:hand;" ng-click="formDetails.groups.splice($index,1)">- </span>
+						  
+						  
+						  <span style="cursor:hand;" ng-hide="showGroup" ng-click="showGroup=true">Expand </span>
+						  <span style="cursor:hand;" ng-show="showGroup" ng-click="showGroup=false">Collapse </span>
 						</td>
 						</tr>
-						<tr ng-repeat-end  ng-show="group.display">
+						<tr>
+							
+							<td>
+								Name : <input type="text" ng-model="group.name" class="input-xlarge text-tip" id="input01" maxlength="20"/>
+								Show Group in Form : <input type="checkbox" ng-model="group.display" /></td>
+							</td>
+						</tr>
+						<tr ng-show="showGroup">
+							<td bgcolor="#d2e4fb">
+								{{group.fields.length}} fields. <span style="cursor:hand;" ng-click="group.fields.push(fieldObject)">+ </span>
+							</td>
+						</tr>
+						<tr ng-repeat-end  ng-show="showGroup">
 						<td colspan="4" bgcolor="#d2e4fb">
-						<table width="100%" border="0" align="center" cellpadding="5" cellspacing="1">
-						  <tr class="text_blue" ng-repeat="(indexField,field) in group.fields" >
+						<table width="100%" border="1" align="center" cellpadding="5" cellspacing="1">
+						  <tr class="text_blue" ng-repeat="field in group.fields track by $index" >
 							
-							<td width="50%" >{{field.displayName}}</td>
-							<td width="50%" ><input type="checkbox" ng-model="field.display" /></td>
-							  
+							<td width="30%" >Component - {{$index+1}}</td>
+							<td width="60%" >
+								<table width="100%" border="0" align="center" cellpadding="5" cellspacing="1">
+								<tr>
+									<td width="30%" >Display Name</td>
+									<td>
+									<input type="text" ng-model="field.displayName" class="input-xlarge text-tip" id="input01" maxlength="20"/>
+									</td>
+								</tr>
+								<tr>
+									<td width="30%" >Show in Form</td>
+									<td><input type="checkbox" ng-model="field.display" /></td>
+									</tr>
+								<tr>
+									<td width="30%" >Required</td>
+									<td><input type="checkbox" ng-model="field.required" /></td>
+								</tr>
+								<tr>
+									<td width="30%" >Type</td>
+									<td><select ng-model="field.type" ng-options="option for (indexOption,option) in typeList"></select></td>
+								</tr>
+								<tr>
+									<td width="30%" >Default Value</td>
+									<td ng-if="field.type!='checkbox'">
+									<input type="text" ng-model="field.value" class="input-xlarge text-tip" id="input01" maxlength="50"/>
+									</td>
+									<td ng-if="field.type=='checkbox'">
+									<input type="checkbox" ng-model="field.value" />
+									</td>
+								</tr>
+								<tr ng-show="field.type=='radio' || field.type=='selectbox'">
+									<td width="30%" >Options</td>
+									<td>
+										<table width="100%" border="1" align="center" cellpadding="5" cellspacing="1">
+											<tr class="text_blue" >
+												<td width="30%" >
+												{{field.options.length}} options. <span style="cursor:hand;" ng-click="field.options.push('')">+ </span>
+												</td>
+											</tr>
+											<tr class="text_blue" ng-repeat="option in field.options track by $index" >
+												<td width="30%" >
+													<input type="text" ng-model="field.options[$index]" class="input-xlarge text-tip" id="input01" maxlength="20"/>
+													<span style="cursor:hand;" ng-click="field.options.splice($index, 0, option)">+ </span>
+													<span style="cursor:hand;" ng-click="field.options.splice($index,1)">- </span>
+												</td>
+											</tr>
+											</table>
+									</td>
+								</tr>
+								</table>
+							</td>
 							
+							<td width="10%" >
+								<!-- <span style="cursor:hand;" ng-click="group.fields.splice($index, 0, angular.copy(field))">+ </span> -->
+								<span style="cursor:hand;" ng-click="cloneField(group.fields, field, $index)">+ </span>
+								<span style="cursor:hand;" ng-click="group.fields.splice($index,1)">- </span>
+							</td>
 							
 							
 						  </tr>
-						  
 						 
 						</table></td>
 						</tr>

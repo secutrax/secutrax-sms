@@ -69,12 +69,12 @@
 						
 						
 						<tr ng-repeat-start="(indexGroup,group) in formDetails.groups" >
-						<td colspan="4" class="text_left_Bold">{{group.name}}
+						<td colspan="4" class="text_left_Bold">{{group.name}}<input type="checkbox" disabled ng-model="group.display" />
 						  <input type="hidden" name="grpid" value="39">
 						  <input type="hidden" name="instid" value="137">
 						</td>
 						</tr>
-						<tr ng-repeat-end  ng-show="group.display">
+						<tr ng-repeat-end >
 						<td colspan="4" bgcolor="#d2e4fb">
 						<table width="100%" border="0" align="center" cellpadding="5" cellspacing="1">
 						  <tr class="text_blue" ng-repeat="(indexField,field) in group.fields" >
